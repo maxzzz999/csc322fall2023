@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>My first three.js app</title>
+    <style>
+      body {
+        margin: 0;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <script src="https://threejs.org/build/three.js"></script>
+    <script>
+      const renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 500);
+      camera.position.set(0, 0, 100);
+      camera.lookAt(0, 0, 0);
+      const scene = new THREE.Scene();
+      const material = new THREE.LineBasicMaterial({
+        color: 0xff0000
+      });
+      const material2 = new THREE.LineDashedMaterial({
+        color: 0x0000ff, dashSize: 3, gapSize: 1.5
+      });
+      const points1 = [];
+      points1.push(new THREE.Vector3(-40, 0, 0));
+      points1.push(new THREE.Vector3(0, 40, 0));
+      points1.push(new THREE.Vector3(40, 0, 0));
+      points1.push(new THREE.Vector3(0, -35, 0));
+      points1.push(new THREE.Vector3(-40, 0, 0));
+      points1.push(new THREE.Vector3(0, 40, 0));
+      points1.push(new THREE.Vector3(0, -35, 0));
+
+      const geometry1 = new THREE.BufferGeometry().setFromPoints(points1);
+      const line1 = new THREE.Line(geometry1, material);
+      scene.add(line1);
+      const points2 = [];
+      points2.push(new THREE.Vector3(-40, 0 , 0));
+       points2.push(new THREE.Vector3(40, 0 , 0));
+
+      const geometry2 = new THREE.BufferGeometry().setFromPoints(points2);
+      const line2 = new THREE.Line(geometry2, material2);
+      line2.computeLineDistances();
+      scene.add(line2);
+      renderer.render(scene, camera);
+
+    </script>
+  </body>
+
+</html>
+
+
