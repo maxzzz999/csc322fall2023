@@ -1,0 +1,158 @@
+scene = new THREE.Scene();
+camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 500);
+camera.position.set(0, 20, 100);
+camera.lookAt(0, 25, 50);
+renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+
+geo = new THREE.BufferGeometry();
+
+
+verts = new Float32Array([
+  -2.75, 0, 2.75,
+  2.75, 0, 2.75,
+  1.7, 50, 1.7,
+
+  1.7, 50, 1.7,
+  -1.7, 50, 1.7,
+  -1.7, 0, 2.75
+]);
+
+geo.setAttribute('position', new THREE.BufferAttribute(verts, 3));
+material = new THREE.MeshBasicMaterial({
+  color: 0x0F0F00
+});
+mesh = new THREE.Mesh(geo, material);
+
+geo1 = new THREE.BufferGeometry();
+verts1 = new Float32Array([
+  2.75, 0, 2.75,
+  2.75, 0, -2.75,
+  1.7, 50, -1.7,
+
+  1.7, 50, -1.7,
+  1.7, 50, 1.7,
+  1.7, 0, 2.75,
+]);
+
+geo1.setAttribute('position', new THREE.BufferAttribute(verts1, 3));
+material1 = new THREE.MeshBasicMaterial({
+  color: "rgb(168,163,162)" //grey
+});
+mesh1 = new THREE.Mesh(geo1, material1);
+
+geo2 = new THREE.BufferGeometry();
+verts2 = new Float32Array([
+  2.75, 0, -2.75,
+  -2.75, 0, -2.75,
+  -1.7, 50, -1.7,
+
+  -1.7, 50, -1.7,
+  1.7, 50, -1.7,
+  1.7, 0, -2.75,
+]);
+
+geo2.setAttribute('position', new THREE.BufferAttribute(verts2, 3));
+material2 = new THREE.MeshBasicMaterial({
+  color: "rgb(41,48,120)" //navy blue
+});
+mesh2 = new THREE.Mesh(geo2, material2);
+
+geo3 = new THREE.BufferGeometry();
+verts3 = new Float32Array([
+  -2.75, 0, -2.75,
+  -2.75, 0, 2.75,
+  -1.7, 50, 1.7,
+  -1.7, 50, 1.7,
+  -1.7, 50, -1.7,
+  -1.7, 0, -2.75,
+]);
+
+geo3.setAttribute('position', new THREE.BufferAttribute(verts3, 3));
+material3 = new THREE.MeshBasicMaterial({
+  color: "rgb(7,113,175)" //royal blue
+});
+mesh3 = new THREE.Mesh(geo3, material3);
+
+geo4 = new THREE.BufferGeometry();
+verts4 = new Float32Array([
+  -1.7, 50, 1.7,
+  1.7, 50.0, 1.7,
+  0, 55, 0,
+]);
+
+geo4.setAttribute('position', new THREE.BufferAttribute(verts4, 3));
+material4 = new THREE.MeshBasicMaterial({
+  color: "rgb(7,85,52)"
+});
+mesh4 = new THREE.Mesh(geo4, material4);
+ 
+geo5 = new THREE.BufferGeometry();
+verts5 = new Float32Array([
+  1.7, 50, 1.7,
+  1.7, 50, -1.7,
+  0, 55, 0,
+]);
+
+geo5.setAttribute('position', new THREE.BufferAttribute(verts5, 3));
+
+material5 = new THREE.MeshBasicMaterial({
+  color: "hsl(29, 28%, 44%)"
+});
+mesh5 = new THREE.Mesh(geo5, material5);
+
+geo6 = new THREE.BufferGeometry();
+verts6 = new Float32Array([
+  1.7, 50, -1.7,
+  -1.7, 50, -1.7,
+  0, 55, 0,
+]);
+
+geo6.setAttribute('position', new THREE.BufferAttribute(verts6, 3));
+material6 = new THREE.MeshBasicMaterial({
+  color: 0xA020F0
+});
+mesh6 = new THREE.Mesh(geo6, material6);
+ 
+geo7 = new THREE.BufferGeometry();
+verts7 = new Float32Array([
+  -1.7, 50, -1.7,
+  -1.7, 50, 1.7,
+  0, 55, 0,
+]);
+
+geo7.setAttribute('position', new THREE.BufferAttribute(verts7, 3));
+material7 = new THREE.MeshBasicMaterial({
+  color: "hsl(350, 100%, 80%)"
+});
+mesh7 = new THREE.Mesh(geo7, material7);
+
+scene.add(mesh);
+scene.add(mesh1);
+scene.add(mesh2);
+scene.add(mesh3);
+scene.add(mesh4);
+scene.add(mesh5);
+scene.add(mesh6);
+scene.add(mesh7);
+camera.position.z = 90;
+
+animate = function() {
+  requestAnimationFrame(animate);
+
+  mesh.rotation.y += 0.01;
+  mesh1.rotation.y += 0.01;
+  mesh2.rotation.y += 0.01;
+  mesh3.rotation.y += 0.01;
+  mesh4.rotation.y += 0.01;
+  mesh5.rotation.y += 0.01;
+  mesh6.rotation.y += 0.01;
+  mesh7.rotation.y += 0.01;
+
+
+  renderer.render(scene, camera);
+};
+
+animate();
