@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>My first three.js app</title>
+    <style>
+      body {
+        margin: 0;
+      }
+
+    </style>
+  </head>
+
+  <body>
+  <canvas id="myCanvas" width="500" height="500" style="border:1px solid #000000;">
+</canvas>
+    <script src="https://threejs.org/build/three.js"></script>
+    <script>
+    </script>
+  </body>
+
+</html>
+
+//Start of code
+scene = new THREE.Scene();
+scene.background = new THREE.Color(0x89CFF0);
+camera = new THREE.PerspectiveCamera(60, 500 / 500, 1, 500);
+camera.position.set(0, 20, 100);
+camera.lookAt(0, 25, 50);
+renderer = new THREE.WebGLRenderer();
+renderer.setSize(500, 500);
+document.body.appendChild(renderer.domElement);
+
+//tall mountain in the background: buffergeo
+function mountain3() {
+  const geometry4 = new THREE.BufferGeometry();
+  const material4 = new THREE.MeshBasicMaterial({
+    color: Math.random() * 0xffffff,
+    side: THREE.DoubleSide
+  });
+  verts3 = new Float32Array([
+    -30, 0, -15,
+    0, 55, -15,
+    30, 0, -15,
+
+  ]);
+  geometry4.setAttribute('position', new THREE.BufferAttribute(verts3, 3));
+  mesh3 = new THREE.Mesh(geometry4, material4);
+  scene.add(mesh3);
+}
+//tall mountain in the background
+
+//green foreground: buffergeo
+function foreground() {
+  const geometry1 = new THREE.BufferGeometry(120, 20);
+  const material1 = new THREE.MeshBasicMaterial({
+    color: 0x016500,
+    side: THREE.DoubleSide
+  });
+  verts = new Float32Array([
+    -100, 0, 15,
+    100, -80, 15,
+    -100, -80, 15,
+
+    -100, 0, 15,
+    100, 0, 15,
+    100, -80, 15
+
+  ]);
+
+  geometry1.setAttribute('position', new THREE.BufferAttribute(verts, 3))
+  const plane1 = new THREE.Mesh(geometry1, material1);
+  scene.add(plane1);
+}
+//green foreground
+
+//mountain in front: buffergeo
+function mountain1() {
+  const geometry2 = new THREE.BufferGeometry();
+  const material2 = new THREE.MeshBasicMaterial({
+    color: Math.random() * 0xffffff,
+    side: THREE.DoubleSide
+  });
+  verts1 = new Float32Array([
+    10, 0, 15,
+    -25, 40, 15,
+    -58, 0, 15,
+
+  ]);
+
+  geometry2.setAttribute('position', new THREE.BufferAttribute(verts1, 3));
+  mesh1 = new THREE.Mesh(geometry2, material2);
+  scene.add(mesh1);
+}
+//mountain in front
+
+//mountain in front: buffergeo
+function mountain2() {
+  const geometry3 = new THREE.BufferGeometry();
+  const material3 = new THREE.MeshBasicMaterial({
+    color: Math.random() * 0xffffff,
+    side: THREE.DoubleSide
+  });
+  verts2 = new Float32Array([
+    -15, -6, 8,
+    25, 40, 8,
+    58, -6, 8,
+
+  ]);
+  geometry3.setAttribute('position', new THREE.BufferAttribute(verts2, 3));
+  mesh2 = new THREE.Mesh(geometry3, material3);
+  scene.add(mesh2);
+}
+//mountain in front
+
+//sun: circlegeo
+function sun() {
+  const geometry5 = new THREE.CircleGeometry(8, 70);
+  const material5 = new THREE.MeshBasicMaterial({
+    color: 0xffff00
+  });
+  const circle = new THREE.Mesh(geometry5, material5);
+  scene.add(circle);
+
+  circle.position.x = 0;
+  circle.position.y = 80;
+  circle.position.z = 4;
+}
+//sun
+
+//birds: birds are made of lines. loop changes the position birds to move across screen
+function birds() {
+  const material6 = new THREE.LineBasicMaterial({
+    color: 0x000000
+  });
+  const points = [];
+  points.push(new THREE.Vector3(-5, 70, 3));
+  points.push(new THREE.Vector3(0, 68, 3));
+  points.push(new THREE.Vector3(5, 70, 3));
+  const geometry6 = new THREE.BufferGeometry().setFromPoints(points);
+  const line = new THREE.Line(geometry6, material6);
+
+  const points2 = [];
+  points2.push(new THREE.Vector3(-25, 71, 3));
+  points2.push(new THREE.Vector3(-20, 69, 3));
+  points2.push(new THREE.Vector3(-15, 71, 3));
+  const geometry7 = new THREE.BufferGeometry().setFromPoints(points2);
+  const line2 = new THREE.Line(geometry7, material6);
+
+
+  const points3 = [];
+  points3.push(new THREE.Vector3(10, 65, 3));
+  points3.push(new THREE.Vector3(15, 63, 3));
+  points3.push(new THREE.Vector3(20, 65, 3));
+  const geometry8 = new THREE.BufferGeometry().setFromPoints(points3);
+  const line3 = new THREE.Line(geometry8, material6);
+
+  const points4 = [];
+  points4.push(new THREE.Vector3(-35, 65, 3));
+  points4.push(new THREE.Vector3(-30, 63, 3));
+  points4.push(new THREE.Vector3(-25, 65, 3));
+  const geometry9 = new THREE.BufferGeometry().setFromPoints(points4);
+  const line4 = new THREE.Line(geometry9, material6);
+
+  const points5 = [];
+  points5.push(new THREE.Vector3(0, 60, 3));
+  points5.push(new THREE.Vector3(-5, 58, 3));
+  points5.push(new THREE.Vector3(-10, 60, 3));
+  const geometry11 = new THREE.BufferGeometry().setFromPoints(points5);
+  const line5 = new THREE.Line(geometry11, material6);
+
+  scene.add(line);
+  scene.add(line2);
+  scene.add(line3);
+  scene.add(line4);
+  scene.add(line5);
+
+
+  function loop() {
+    renderer.render(scene, camera);
+
+    if (line.position.x <= targetPositionX) {
+      line.position.x += 1;
+    } else {
+      line.position.x = -100;
+    }
+    if (line2.position.x <= targetPositionX) {
+      line2.position.x += 1;
+    } else {
+      line2.position.x = -100;
+    }
+    if (line3.position.x <= targetPositionX) {
+      line3.position.x += 1;
+    } else {
+      line3.position.x = -100;
+    }
+    if (line4.position.x <= targetPositionX) {
+      line4.position.x += 1;
+    } else {
+      line4.position.x = -100;
+    }
+    if (line5.position.x <= targetPositionX) {
+      line5.position.x += 1;
+    } else {
+      line5.position.x = -100;
+    }
+
+    requestAnimationFrame(loop);
+
+  }
+  loop()
+}
+//birds
+
+//motion parallax: detects mouse movement for camera. motion parallax effect is achieved by manipulating depth of lines and meshes
+function motionP() {
+  //motion parallax
+  var mouseTolerance = 0.1;
+
+  document.onmousemove = function(e) {
+    var centerX = window.innerWidth * 0.5;
+    var centerY = window.innerHeight * 0.5;
+
+    camera.position.x = (e.clientX - centerX) * mouseTolerance;
+    camera.position.y = (e.clientY - centerY) * mouseTolerance;
+  };
+}
+//motion parallax
+
+//Render loop
+function render() {
+  requestAnimationFrame(render);
+  renderer.render(scene, camera);
+}
+
+
+var targetPositionX = 100;
+
+//tree combination of scaled circlegeo and buffergeo
+function tree() {
+  const geometry11 = new THREE.CircleGeometry(5, 55);
+  const material7 = new THREE.MeshBasicMaterial({
+    color: 0x00ff00
+  });
+  const ellipse = new THREE.Mesh(geometry11, material7);
+  scene.add(ellipse);
+  ellipse.scale.setY(2.5)
+  ellipse.scale.setX(1.5)
+  ellipse.position.x = 20;
+  ellipse.position.y = 0;
+  ellipse.position.z = 20;
+
+  const geometry10 = new THREE.BufferGeometry(120, 20);
+  const material8 = new THREE.MeshBasicMaterial({
+    color: 0x964B00,
+    side: THREE.DoubleSide
+  });
+  verts5 = new Float32Array([
+    25, -5, 19,
+    15, -5, 19,
+    25, -25, 19,
+
+    15, -5, 19,
+    15, -25, 19,
+    25, -25, 19
+
+  ]);
+
+  geometry10.setAttribute('position', new THREE.BufferAttribute(verts5, 3))
+  const rect = new THREE.Mesh(geometry10, material8);
+  scene.add(rect);
+}
+//tree
+
+//grass: loop of lines
+function grass() {
+  const material0 = new THREE.LineBasicMaterial({
+    color: 0x00ff00
+  });
+  var x = -100
+  var y1 = 3
+  var y2 = -3
+  blades = []
+  for (let i = 0; i < 100; i++) {
+    points0 = [];
+    points0.push(new THREE.Vector3(x, y1, 19));
+    points0.push(new THREE.Vector3(x, y2, 19));
+    blades.push(points0);
+    var x = x + 2;
+  }
+  for (let i = 0; i < 100; i++) {
+    const geometry13 = new THREE.BufferGeometry().setFromPoints(blades[i]);
+    const line9 = new THREE.Line(geometry13, material0);
+    scene.add(line9);
+  }
+}
+//grass
+
+//clouds
+function clouds(){
+  const geometry15 = new THREE.CircleGeometry(8, 70);
+  const material15 = new THREE.MeshBasicMaterial({
+    color: 0xffffff
+  });
+  const circle1 = new THREE.Mesh(geometry15, material15);
+  scene.add(circle1);
+
+  circle1.position.x = -50;
+  circle1.position.y = 70;
+  circle1.position.z = 4;
+  
+  const circle2 = new THREE.Mesh(geometry15, material15);
+  scene.add(circle2);
+
+  circle2.position.x = -40;
+  circle2.position.y = 68;
+  circle2.position.z = 4;
+  
+  const circle3 = new THREE.Mesh(geometry15, material15);
+  scene.add(circle3);
+
+  circle3.position.x = -45;
+  circle3.position.y = 75;
+  circle3.position.z = 4;
+  
+  const circle4 = new THREE.Mesh(geometry15, material15);
+  scene.add(circle4);
+
+  circle4.position.x = 50;
+  circle4.position.y = 70;
+  circle4.position.z = 4;
+  
+  const circle5 = new THREE.Mesh(geometry15, material15);
+  scene.add(circle5);
+
+  circle5.position.x = 40;
+  circle5.position.y = 68;
+  circle5.position.z = 4;
+  
+  const circle6 = new THREE.Mesh(geometry15, material15);
+  scene.add(circle6);
+
+  circle6.position.x = 45;
+  circle6.position.y = 75;
+  circle6.position.z = 4;
+}
+birds();
+motionP();
+mountain1();
+mountain2();
+mountain3();
+foreground();
+grass();
+tree();
+sun();
+clouds();
+render();
